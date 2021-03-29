@@ -5,9 +5,11 @@ services:
     build: ./appnode
     # image: node:10.14.2
     ports: 
-      - "8000:8000"
+      - "8000:80"
     container_name: appnode
     tty: true
+    environment: 
+      - PORT=80
     volumes:
       - ../schedule-arranger:/src
     working_dir: "/src"
@@ -16,7 +18,7 @@ services:
     build: ./postgres
     # image: postgres:10.16
     ports: 
-      - "3306:3306"
+      - "33060:3306"
     container_name: postgres
     tty: true
     working_dir: "/"

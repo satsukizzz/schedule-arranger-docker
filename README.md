@@ -10,31 +10,31 @@ N予備校のWeb入門はVagrantで構成されている。
 
 # 構成
 ## リポジトリ
-- Docker設定用リポジトリ(ここ)
-- プロジェクト用リポジトリ(作成中)
+- docker用リポジトリ(schedule-arranger-docker)
+- プロジェクト用リポジトリ(schedule-arranger)
 
-## cloneするリポジトリ構成
+## リポジトリを用意する
 1. 好きなプロジェクト名のフォルダを作る
-1. そこにDockerリポジトリ、プロジェクトリポジトリをそれぞれcloneする
-cloneしたフォルダ名の変更をしてはいけない(Dockerが上手くいかなくなる)
+1. そこにdocker用リポジトリ、プロジェクト用リポジトリをそれぞれcloneする
+1. schedule-arrangerリポジトリで`yarn install`をする…これはホスト環境で行う
+
+注意：プロジェクト用リポジトリのフォルダ名の変更をしてはいけない(docker-composeが上手くいかなくなる)
 
 ## コンテナを立ち上げる
 1. Git Bashを開く
 1. dockerリポジトリ内で次のコマンドを実行する
 `docker-compose up -d`
+1. `http://localhost:8000`へアクセスして、サイトが表示されるのを確認する
 
 ## node/yarnのあるコンテナで作業したいとき
 dockerリポジトリで
-`docker-compose exec -uroot appnode [command]`
+`docker-compose exec -u node appnode [command]`
 を行えばコマンドが実行される。
 
 もしくはコンテナ内に入るなら
-`docker-compose exec -uroot appnode bash`
-とする。
+`docker-compose exec -u node appnode bash`
+とする。これは`node`ユーザーでbashを起動することに相当する。
 
-なお、vagrantでの`PORT=8000 yarn start`に対応するコマンドは
-`docker-compose exec -uroot -e PORT=8000 appnode yarn start`
-である。環境変数はコンテナ`appnode`より先にかかないといけない。
-
+間違っても`-u root`で入って作業してはいけない。root権限でファイルが作られると、windows側から編集ができなくなってしまう。
 
 
